@@ -21,6 +21,7 @@ public class MyRetailController {
     public ResponseEntity<ProductResponse> getProduct(@PathVariable Integer id )
     {
         Optional<ProductResponse> optionalProductResponse = myRetailService.getProduct(id);
+
         return optionalProductResponse.map(productResponse -> new ResponseEntity<>(productResponse, HttpStatus.FOUND)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -28,7 +29,7 @@ public class MyRetailController {
     public ResponseEntity<ProductResponse> updateProductPrice(@PathVariable Integer id, @RequestBody ProductRequest productRequest )
     {
         Optional<ProductResponse> optionalProductResponse = myRetailService.updateProductPrice(id, productRequest);
-        return optionalProductResponse.map(productResponse -> new ResponseEntity<>(productResponse, HttpStatus.CREATED)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return optionalProductResponse.map(productResponse -> new ResponseEntity<>(productResponse, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 
