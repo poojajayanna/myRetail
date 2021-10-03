@@ -3,6 +3,7 @@ package com.target.myRetail.controller;
 import com.target.myRetail.dto.CurrentPrice;
 import com.target.myRetail.dto.ProductRequest;
 import com.target.myRetail.dto.ProductResponse;
+import com.target.myRetail.exception.MyRetailException;
 import com.target.myRetail.service.MyRetailService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,7 @@ public class MyRetailControllerTest {
 
     @Test
     void testGetProduct_Found() {
-        when(myRetailService.getProduct(any(Integer.class))).thenReturn(Optional.of(new ProductResponse()));
+        when(myRetailService.getProduct(any(Integer.class))).thenReturn(new ProductResponse());
         ResponseEntity<ProductResponse> response = myRetailController.getProduct(any(Integer.class));
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.FOUND, response.getStatusCode());
@@ -38,7 +39,7 @@ public class MyRetailControllerTest {
 
     @Test
     void testGetProduct_NotFound() {
-        when(myRetailService.getProduct(any(Integer.class))).thenReturn(Optional.empty());
+        when(myRetailService.getProduct(any(Integer.class))).thenThrow(MyRetailException.class);
         ResponseEntity<ProductResponse> response = myRetailController.getProduct(any(Integer.class));
         assertNull(response.getBody());
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());

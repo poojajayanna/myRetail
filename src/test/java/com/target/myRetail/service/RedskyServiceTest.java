@@ -4,7 +4,8 @@ import com.target.myRetail.dto.Item;
 import com.target.myRetail.dto.Product;
 import com.target.myRetail.dto.ProductDescription;
 import com.target.myRetail.dto.ProductDetails;
-import org.junit.jupiter.api.Assertions;
+import com.target.myRetail.exception.MyRetailException;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,6 +49,13 @@ public class RedskyServiceTest {
         when(mock.getBody()).thenReturn(productDetail);
         String productName = redskyService.getProductName(12345);
         assertEquals("The Big Lebowski (Blu-ray) (Widescreen)", productName);
+    }
+
+    @Test
+    public void getProductName_NotFound() {
+        ResponseEntity mock = mock(ResponseEntity.class);
+        when(restTemplate.getForEntity(any(String.class), any())).thenThrow(MyRetailException.class);
+        assertThrows(MyRetailException.class,() -> redskyService.getProductName(12345));
     }
 
 }

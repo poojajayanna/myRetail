@@ -2,12 +2,14 @@ package com.target.myRetail.controller;
 
 import com.target.myRetail.dto.ProductRequest;
 import com.target.myRetail.dto.ProductResponse;
+import com.target.myRetail.exception.MyRetailException;
 import com.target.myRetail.service.MyRetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 @RestController
@@ -18,11 +20,15 @@ public class MyRetailController {
     MyRetailService myRetailService;
 
     @GetMapping(path="/{id}", produces = "application/json")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable Integer id )
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable @NotNull Integer id )
     {
-        Optional<ProductResponse> optionalProductResponse = myRetailService.getProduct(id);
-
-        return optionalProductResponse.map(productResponse -> new ResponseEntity<>(productResponse, HttpStatus.FOUND)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        ProductResponse productResponse;
+        try {
+            productResponse = myRetailService.getProduct(id);
+            return new ResponseEntity<>(productResponse, HttpStatus.FOUND);
+        } catch (MyRetailException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping(path="/{id}", consumes = "application/json", produces = "application/json")
