@@ -12,5 +12,5 @@ public class CurrentPrice {
     private BigDecimal value;
 
     @JsonProperty("currency_code")
-    private String currencyCode;
+    private Enum<CurrencyCode> currencyCode;
 }

@@ -1,5 +1,6 @@
 package com.target.myRetail.controller;
 
+import com.target.myRetail.dto.CurrencyCode;
 import com.target.myRetail.dto.CurrentPrice;
 import com.target.myRetail.dto.ProductRequest;
 import com.target.myRetail.dto.ProductResponse;
@@ -31,7 +32,7 @@ public class MyRetailControllerTest {
         ProductRequest productRequest = new ProductRequest();
         productRequest.setName("productPrice");
         CurrentPrice currentPrice = new CurrentPrice();
-        currentPrice.setCurrencyCode("USD");
+        currentPrice.setCurrencyCode(CurrencyCode.valueOf("USD"));
         currentPrice.setValue(BigDecimal.valueOf(12.12));
         productRequest.setProductId(13860428);
         productRequest.setCurrentPrice(currentPrice);
@@ -46,7 +47,7 @@ public class MyRetailControllerTest {
         ProductRequest productRequest = new ProductRequest();
         productRequest.setName("productPrice");
         CurrentPrice currentPrice = new CurrentPrice();
-        currentPrice.setCurrencyCode("USD");
+        currentPrice.setCurrencyCode(CurrencyCode.valueOf("USD"));
         currentPrice.setValue(BigDecimal.valueOf(12.12));
         productRequest.setProductId(13860428);
         productRequest.setCurrentPrice(currentPrice);
@@ -73,7 +74,7 @@ public class MyRetailControllerTest {
         ProductRequest productRequest = new ProductRequest();
         productRequest.setName("productPrice");
         CurrentPrice currentPrice = new CurrentPrice();
-        currentPrice.setCurrencyCode("USD");
+        currentPrice.setCurrencyCode(CurrencyCode.valueOf("USD"));
         currentPrice.setValue(BigDecimal.valueOf(12.12));
         productRequest.setCurrentPrice(currentPrice);
         when(myRetailService.updateProductPrice(any(Integer.class),any(ProductRequest.class))).thenReturn(new ProductResponse());
@@ -88,7 +89,7 @@ public class MyRetailControllerTest {
         ProductRequest productRequest = new ProductRequest();
         productRequest.setName("productPrice");
         CurrentPrice currentPrice = new CurrentPrice();
-        currentPrice.setCurrencyCode("USD");
+        currentPrice.setCurrencyCode(CurrencyCode.valueOf("USD"));
         currentPrice.setValue(BigDecimal.valueOf(12.12));
         productRequest.setCurrentPrice(currentPrice);
         assertThrows(MyRetailException.class, () -> myRetailController.updateProductPrice(123456,productRequest));

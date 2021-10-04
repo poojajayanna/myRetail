@@ -1,4 +1,4 @@
-package com.target.myRetail.dto;
+package com.target.myRetail.integration.dto;
 
 import com.target.myRetail.integration.dto.Product;
 import lombok.Data;
@@ -7,4 +7,5 @@ import lombok.Data;
 public class ProductDetails {
 
     private Product product;
+
 }

@@ -1,9 +1,9 @@
-package com.target.myRetail.service;
+package com.target.myRetail.integration.service;
 
 import com.target.myRetail.integration.dto.Item;
 import com.target.myRetail.integration.dto.Product;
 import com.target.myRetail.integration.dto.ProductDescription;
-import com.target.myRetail.dto.ProductDetails;
+import com.target.myRetail.integration.dto.ProductDetails;
 import com.target.myRetail.exception.MyRetailException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,6 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.concurrent.CompletableFuture;
+
 @ExtendWith(MockitoExtension.class)
 public class RedskyServiceTest {
 
@@ -32,7 +34,7 @@ public class RedskyServiceTest {
     ResponseEntity<Object> responseEntity;
 
     @Test
-    public void getProductName_Found() {
+    public void testGetProductName_Found() throws Exception {
         ProductDetails productDetail =new ProductDetails();
         Item item = new Item();
         ProductDescription productDescription = new ProductDescription();
@@ -44,12 +46,12 @@ public class RedskyServiceTest {
 
         when(restTemplate.getForEntity(any(String.class), any())).thenReturn(responseEntity);
         when(responseEntity.getBody()).thenReturn(productDetail);
-        String productName = redskyService.getProductName(12345);
-        assertEquals("The Big Lebowski (Blu-ray) (Widescreen)", productName);
+        CompletableFuture<String> productName = redskyService.getProductName(12345);
+        assertEquals("The Big Lebowski (Blu-ray) (Widescreen)", productName.get());
     }
 
     @Test
-    public void getProductName_NotFound() {
+    public void testGetProductName_NotFound() {
         when(restTemplate.getForEntity(any(String.class), any())).thenThrow(MyRetailException.class);
         assertThrows(MyRetailException.class,() -> redskyService.getProductName(12345));
     }
