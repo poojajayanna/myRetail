@@ -12,10 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import java.math.BigDecimal;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
@@ -30,6 +27,34 @@ public class MyRetailControllerTest {
     MyRetailService myRetailService;
 
     @Test
+    void testAddProduct_Created() {
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.setName("productPrice");
+        CurrentPrice currentPrice = new CurrentPrice();
+        currentPrice.setCurrencyCode("USD");
+        currentPrice.setValue(BigDecimal.valueOf(12.12));
+        productRequest.setProductId(13860428);
+        productRequest.setCurrentPrice(currentPrice);
+        when(myRetailService.addProduct(any(ProductRequest.class))).thenReturn(new ProductResponse());
+        ResponseEntity<ProductResponse> response = myRetailController.addProduct(productRequest);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    }
+
+    @Test
+    void testAddProduct_Exception() {
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.setName("productPrice");
+        CurrentPrice currentPrice = new CurrentPrice();
+        currentPrice.setCurrencyCode("USD");
+        currentPrice.setValue(BigDecimal.valueOf(12.12));
+        productRequest.setProductId(13860428);
+        productRequest.setCurrentPrice(currentPrice);
+        when(myRetailService.addProduct(any(ProductRequest.class))).thenThrow(MyRetailException.class);
+        assertThrows(MyRetailException.class, () -> myRetailController.addProduct(productRequest));
+    }
+
+    @Test
     void testGetProduct_Found() {
         when(myRetailService.getProduct(any(Integer.class))).thenReturn(new ProductResponse());
         ResponseEntity<ProductResponse> response = myRetailController.getProduct(any(Integer.class));
@@ -40,21 +65,18 @@ public class MyRetailControllerTest {
     @Test
     void testGetProduct_NotFound() {
         when(myRetailService.getProduct(any(Integer.class))).thenThrow(MyRetailException.class);
-        ResponseEntity<ProductResponse> response = myRetailController.getProduct(any(Integer.class));
-        assertNull(response.getBody());
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertThrows(MyRetailException.class, () -> myRetailController.getProduct(any(Integer.class)));
     }
 
     @Test
     void testUpdateProductPrice_Updated() {
-
         ProductRequest productRequest = new ProductRequest();
         productRequest.setName("productPrice");
         CurrentPrice currentPrice = new CurrentPrice();
         currentPrice.setCurrencyCode("USD");
         currentPrice.setValue(BigDecimal.valueOf(12.12));
         productRequest.setCurrentPrice(currentPrice);
-        when(myRetailService.updateProductPrice(any(Integer.class),any(ProductRequest.class))).thenReturn(Optional.of(new ProductResponse()));
+        when(myRetailService.updateProductPrice(any(Integer.class),any(ProductRequest.class))).thenReturn(new ProductResponse());
         ResponseEntity<ProductResponse> response = myRetailController.updateProductPrice(123456,productRequest);
         assertNotNull(response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -62,20 +84,14 @@ public class MyRetailControllerTest {
 
     @Test
     void testUpdateProductPrice_NotFound() {
-        when(myRetailService.updateProductPrice(any(Integer.class),any(ProductRequest.class))).thenReturn(Optional.empty());
+        when(myRetailService.updateProductPrice(any(Integer.class),any(ProductRequest.class))).thenThrow(MyRetailException.class);
         ProductRequest productRequest = new ProductRequest();
         productRequest.setName("productPrice");
         CurrentPrice currentPrice = new CurrentPrice();
         currentPrice.setCurrencyCode("USD");
         currentPrice.setValue(BigDecimal.valueOf(12.12));
         productRequest.setCurrentPrice(currentPrice);
-        ResponseEntity<ProductResponse> response = myRetailController.updateProductPrice(123456,productRequest);
-        assertNull(response.getBody());
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertThrows(MyRetailException.class, () -> myRetailController.updateProductPrice(123456,productRequest));
     }
-
-
-
-
 
 }

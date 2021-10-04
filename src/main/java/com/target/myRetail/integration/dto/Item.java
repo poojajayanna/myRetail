@@ -1,4 +1,4 @@
-package com.target.myRetail.dto;
+package com.target.myRetail.integration.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

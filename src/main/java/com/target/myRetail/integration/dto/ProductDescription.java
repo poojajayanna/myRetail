@@ -1,4 +1,4 @@
-package com.target.myRetail.dto;
+package com.target.myRetail.integration.dto;
 
 import lombok.Data;
 

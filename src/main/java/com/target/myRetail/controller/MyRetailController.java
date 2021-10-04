@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/products")
@@ -19,23 +18,26 @@ public class MyRetailController {
     @Autowired
     MyRetailService myRetailService;
 
-    @GetMapping(path="/{id}", produces = "application/json")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable @NotNull Integer id )
+    @PostMapping(path="/", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<ProductResponse> addProduct(@RequestBody ProductRequest productRequest ) throws MyRetailException
     {
-        ProductResponse productResponse;
-        try {
-            productResponse = myRetailService.getProduct(id);
-            return new ResponseEntity<>(productResponse, HttpStatus.FOUND);
-        } catch (MyRetailException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        ProductResponse productResponse = myRetailService.addProduct(productRequest);
+        return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
+    }
+
+    @GetMapping(path="/{id}", produces = "application/json")
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable @NotNull Integer id ) throws MyRetailException
+    {
+        ProductResponse productResponse = myRetailService.getProduct(id);
+        return new ResponseEntity<>(productResponse, HttpStatus.FOUND);
+
     }
 
     @PutMapping(path="/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ProductResponse> updateProductPrice(@PathVariable Integer id, @RequestBody ProductRequest productRequest )
     {
-        Optional<ProductResponse> optionalProductResponse = myRetailService.updateProductPrice(id, productRequest);
-        return optionalProductResponse.map(productResponse -> new ResponseEntity<>(productResponse, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        ProductResponse productResponse = myRetailService.updateProductPrice(id, productRequest);
+        return new ResponseEntity<>(productResponse, HttpStatus.OK);
     }
 
 

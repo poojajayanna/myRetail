@@ -10,6 +10,8 @@ public class ProductRequest {
 
     private String name;
 
+    private Integer productId;
+
     @JsonProperty("current_price")
     private CurrentPrice currentPrice;
 }
