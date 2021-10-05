@@ -1,7 +1,6 @@
 package com.target.myRetail.exception;
 
-import com.target.myRetail.exception.MyRetailException;
-import com.target.myRetail.exception.MyRetailExceptionHandler;
+import com.target.myRetail.exception.handler.MyRetailExceptionHandler;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

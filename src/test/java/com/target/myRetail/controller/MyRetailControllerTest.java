@@ -18,6 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
+/**
+ * @author Pooja Jayanna
+ * @version 1.0
+ *
+ * Unit - Test for controller.
+ */
 @ExtendWith(MockitoExtension.class)
 public class MyRetailControllerTest {
 

@@ -18,6 +18,12 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Pooja Jayanna
+ * @version 1.0
+ *
+ * Integration - Test for service.
+ */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(classes = MyRetailApplication.class)
 @TestPropertySource(

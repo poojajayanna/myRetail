@@ -1,7 +1,11 @@
 package com.target.myRetail.dto;
 
-import lombok.Data;
-
+/**
+ * Predefined currency codes.
+ *
+ * @author Pooja Jayanna
+ * @version 1.0
+ */
 public enum CurrencyCode {
-    USD, EUR, HRK, GBP, RON, OTH;
+    USD, EUR, HRK, GBP, RON, INR;
 }

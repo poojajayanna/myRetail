@@ -5,9 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.retry.backoff.FixedBackOffPolicy;
-import org.springframework.retry.policy.SimpleRetryPolicy;
-import org.springframework.retry.support.RetryTemplate;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -16,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @SpringBootApplication
 @EnableRetry
+@EnableAsync
 @Slf4j
 public class MyRetailApplication {
 
@@ -27,7 +26,7 @@ public class MyRetailApplication {
 	/**
 	 * Creating rest template bean.
 	 *
-	 * @return
+	 * @return RestTemplate
 	 */
 	@Bean
 	public RestTemplate getRestTemplate() {

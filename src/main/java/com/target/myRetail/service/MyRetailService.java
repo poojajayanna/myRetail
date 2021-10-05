@@ -1,17 +1,15 @@
 package com.target.myRetail.service;
 
-import com.target.myRetail.MyRetailApplication;
 import com.target.myRetail.dto.ProductRequest;
 import com.target.myRetail.dto.ProductResponse;
 import com.target.myRetail.exception.MyRetailException;
+import com.target.myRetail.integration.dto.ProductDetails;
 import com.target.myRetail.integration.service.RedskyService;
 import com.target.myRetail.mapper.ProductMapper;
 import com.target.myRetail.model.Product;
 import com.target.myRetail.repository.MyRetailRepository;
 import com.target.myRetail.util.MessageUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author Pooja Jayanna
@@ -47,11 +44,12 @@ public class MyRetailService {
     public ProductResponse getProduct(Integer id) throws MyRetailException {
         log.debug("Entering getProduct with id - " + id);
         try {
-            Optional<Product> productOptional = myRetailRepository.findById(id);
+            Optional<Product> productOptional = getProductDetails(id).get();
+            ProductDetails productDetails = redskyService.getProductName(id).get();
             if (productOptional.isPresent()) {
                 log.debug("Exciting getProduct with ProductResponse - " + productOptional.get().toString());
-                CompletableFuture<String> productName = redskyService.getProductName(id);
-                return ProductMapper.toProductResponse(productOptional.get(), productName.get()) ;
+                String productName = productDetails.getProduct().getItem().getProductDescription().getTitle();
+                return ProductMapper.toProductResponse(productOptional.get(), productName) ;
             } else {
                 log.debug("Exciting getProduct with Not found status ");
                 throw new MyRetailException(MessageUtils.NOT_FOUND+id, HttpStatus.NOT_FOUND);
@@ -66,34 +64,22 @@ public class MyRetailService {
     /**
      * Makes asynchronous call to db to retrieve product details.
      *
-     * @param id
-     * @return
-     * @throws Exception throws InterruptedException or ExecutionException
+     * @param id -ProductId
+     * @return CompletableFuture<Optional<Product>> - async call
      */
     @Async
-    private Optional<Product> getProductDetails(Integer id) throws  Exception {
+    private CompletableFuture<Optional<Product>> getProductDetails(Integer id) {
         log.debug("Entering getProductDetails with id - " + id);
-        try {
-            CompletableFuture<Optional<Product>> completableProduct = CompletableFuture.completedFuture(myRetailRepository.findById(id));
-            return completableProduct.get();
-        } catch (InterruptedException e) {
-            log.debug("Exciting getProductDetails with Exception - " +e.getMessage());
-            log.error("Exciting getProductDetails with Exception - " +e.getMessage());
-            throw e;
-        } catch (ExecutionException e) {
-            log.debug("Exciting getProductDetails with Exception - " +e.getMessage());
-            log.error("Exciting getProductDetails with Exception - " +e.getMessage());
-            throw e;
-        }
+        return CompletableFuture.completedFuture(myRetailRepository.findById(id));
     }
 
     /**
      * Updates the product with price
      *
-     * @param id
-     * @param productRequest
-     * @return
-     * @throws MyRetailException
+     * @param id - ProductId
+     * @param productRequest ProductRequest for update
+     * @return ProductResponse
+     * @throws MyRetailException - Exception
      */
     public ProductResponse updateProductPrice(Integer id, ProductRequest productRequest) throws MyRetailException {
         try {
@@ -118,9 +104,9 @@ public class MyRetailService {
     /**
      * adds the product details in db
      *
-     * @param productRequest
-     * @return
-     * @throws MyRetailException
+     * @param productRequest - Product Request for adding product
+     * @return ProductResponse
+     * @throws MyRetailException - Exception
      */
     public ProductResponse addProduct(ProductRequest productRequest) throws MyRetailException {
         try {

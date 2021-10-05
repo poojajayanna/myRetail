@@ -2,7 +2,6 @@ package com.target.myRetail.controller;
 
 import com.target.myRetail.dto.ProductRequest;
 import com.target.myRetail.dto.ProductResponse;
-import com.target.myRetail.exception.MyRetailException;
 import com.target.myRetail.service.MyRetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +30,11 @@ public class MyRetailController {
     /**
      * Adds product details in db.
      *
-     * @param productRequest
-     * @return
-     * @throws MyRetailException
+     * @param productRequest Request for adding Product
+     * @return returns ProductResponse with status CREATED
      */
     @PostMapping(path="/", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ProductResponse> addProduct(@Valid @RequestBody ProductRequest productRequest ) throws MyRetailException
+    public ResponseEntity<ProductResponse> addProduct(@Valid @RequestBody ProductRequest productRequest )
     {
         log.debug("Entering addProduct with ProductRequest - " + productRequest.toString());
         ProductResponse productResponse = myRetailService.addProduct(productRequest);
@@ -47,12 +45,11 @@ public class MyRetailController {
     /**
      * Retrieve product form db and product name from Redsky service.
      *
-     * @param id
-     * @return
-     * @throws MyRetailException
+     * @param id - Retrieve Pruct for id
+     * @return - ProductResponse with status FOUND
      */
     @GetMapping(path="/{id}", produces = "application/json")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable @NotNull Integer id ) throws MyRetailException
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable @NotNull Integer id )
     {
         log.debug("Entering getProduct with id - " + id);
         ProductResponse productResponse = myRetailService.getProduct(id);
@@ -64,9 +61,9 @@ public class MyRetailController {
     /**
      * Updates the price for given product id.
      *
-     * @param id
-     * @param productRequest
-     * @return
+     * @param id - Update price for id
+     * @param productRequest - Price deatisl to be updated
+     * @return ProductResponse - updated price with status OK
      */
     @PutMapping(path="/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ProductResponse> updateProductPrice(@NotNull @PathVariable Integer id,@Valid @RequestBody ProductRequest productRequest )

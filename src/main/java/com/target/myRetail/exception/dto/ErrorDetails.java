@@ -1,4 +1,4 @@
-package com.target.myRetail.exception;
+package com.target.myRetail.exception.dto;
 
 import lombok.Data;
 

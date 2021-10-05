@@ -5,6 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import java.math.BigDecimal;
 
+/**
+ * CurrentPrice data.
+ *
+ * @author Pooja Jayanna
+ * @version 1.0
+ */
 @Data
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class CurrentPrice {
@@ -12,5 +18,5 @@ public class CurrentPrice {
     private BigDecimal value;
 
     @JsonProperty("currency_code")
-    private Enum<CurrencyCode> currencyCode;
+    private CurrencyCode currencyCode;
 }

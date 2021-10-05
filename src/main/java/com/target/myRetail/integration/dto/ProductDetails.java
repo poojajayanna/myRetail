@@ -1,8 +1,12 @@
 package com.target.myRetail.integration.dto;
-
-import com.target.myRetail.integration.dto.Product;
 import lombok.Data;
 
+/**
+ * Product data from external Redsky service.
+ *
+ * @author Pooja Jayanna
+ * @version 1.0
+ */
 @Data
 public class ProductDetails {
 

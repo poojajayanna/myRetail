@@ -29,7 +29,6 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
 	compileOnly 'org.projectlombok:lombok:1.18.20'
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 	testCompileOnly 'org.projectlombok:lombok:1.18.20'
