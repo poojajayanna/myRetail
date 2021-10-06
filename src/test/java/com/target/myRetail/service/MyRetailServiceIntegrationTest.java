@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = MyRetailApplication.class)
 @TestPropertySource(
         locations = "classpath:application-test.properties")
-public class MyRetailServiceTest {
+public class MyRetailServiceIntegrationTest {
 
     @Autowired
     MyRetailService myRetailService;
@@ -49,11 +49,6 @@ public class MyRetailServiceTest {
     }
 
     @Test
-    public void testAddProduct_Exception() {
-        assertThrows(MyRetailException.class, () -> myRetailService.addProduct(null));
-    }
-
-    @Test
     @Order(2)
     public void testGetProduct_Found() {
         ProductResponse productResponse = myRetailService.getProduct(13860428);
@@ -69,7 +64,7 @@ public class MyRetailServiceTest {
 
     @Test
     public void testGetProduct_Exception() {
-        assertThrows(MyRetailException.class, () ->myRetailService.getProduct(null));
+        assertThrows(IllegalArgumentException.class, () ->myRetailService.getProduct(null));
     }
 
     @Test
@@ -98,7 +93,7 @@ public class MyRetailServiceTest {
 
     @Test
     public void testUpdateProductPrice_Exception() {
-        assertThrows(MyRetailException.class, () ->myRetailService.updateProductPrice(null, new ProductRequest()));
+        assertThrows(IllegalArgumentException.class, () ->myRetailService.updateProductPrice(null, new ProductRequest()));
     }
 
 }

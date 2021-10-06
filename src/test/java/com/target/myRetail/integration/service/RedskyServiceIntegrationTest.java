@@ -21,7 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = MyRetailApplication.class)
 @TestPropertySource(
         locations = "classpath:application-test.properties")
-public class RedskyServiceTest {
+
+public class RedskyServiceIntegrationTest {
 
     @Autowired
     RedskyService redskyService;
@@ -34,7 +35,7 @@ public class RedskyServiceTest {
         assertEquals("The Big Lebowski (Blu-ray)", productDetails.getProduct().getItem().getProductDescription().getTitle());
     }
 
-    @Test
+   @Test
     public void testGetProductName_NotFound() {
         try {
             redskyService.getProductName(12345).get();

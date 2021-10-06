@@ -15,9 +15,8 @@ import javax.validation.constraints.NotNull;
 /**
  * @author Pooja Jayanna
  * @version 1.0
- *
+ * <p>
  * Controller class for MyRetail service.
- *
  */
 @RestController
 @Slf4j
@@ -33,12 +32,11 @@ public class MyRetailController {
      * @param productRequest Request for adding Product
      * @return returns ProductResponse with status CREATED
      */
-    @PostMapping(path="/", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ProductResponse> addProduct(@Valid @RequestBody ProductRequest productRequest )
-    {
-        log.debug("Entering addProduct with ProductRequest - " + productRequest.toString());
+    @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<ProductResponse> addProduct(@Valid @RequestBody ProductRequest productRequest) {
+        log.debug("Entering addProduct with ProductRequest - " + productRequest);
         ProductResponse productResponse = myRetailService.addProduct(productRequest);
-        log.debug("Exiting addProduct with ProductResponse - " + productResponse.toString());
+        log.debug("Exiting addProduct with ProductResponse - " + productResponse);
         return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
     }
 
@@ -48,12 +46,11 @@ public class MyRetailController {
      * @param id - Retrieve Pruct for id
      * @return - ProductResponse with status FOUND
      */
-    @GetMapping(path="/{id}", produces = "application/json")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable @NotNull Integer id )
-    {
+    @GetMapping(path = "/{id}", produces = "application/json")
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable @NotNull Integer id) {
         log.debug("Entering getProduct with id - " + id);
         ProductResponse productResponse = myRetailService.getProduct(id);
-        log.debug("Exiting getProduct with ProductResponse - " + productResponse.toString());
+        log.debug("Exiting getProduct with ProductResponse - " + productResponse);
         return new ResponseEntity<>(productResponse, HttpStatus.FOUND);
 
     }
@@ -61,14 +58,13 @@ public class MyRetailController {
     /**
      * Updates the price for given product id.
      *
-     * @param id - Update price for id
-     * @param productRequest - Price deatisl to be updated
+     * @param id             - Update price for id
+     * @param productRequest - Price details to be updated
      * @return ProductResponse - updated price with status OK
      */
-    @PutMapping(path="/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ProductResponse> updateProductPrice(@NotNull @PathVariable Integer id,@Valid @RequestBody ProductRequest productRequest )
-    {
-        log.debug("Entering updateProductPrice with id - " + id +"and ProductRequest - " + productRequest.toString());
+    @PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<ProductResponse> updateProductPrice(@NotNull @PathVariable Integer id, @Valid @RequestBody ProductRequest productRequest) {
+        log.debug("Entering updateProductPrice with id - " + id + "and ProductRequest - " + productRequest.toString());
         ProductResponse productResponse = myRetailService.updateProductPrice(id, productRequest);
         log.debug("Exiting updateProductPrice with ProductResponse - " + productResponse.toString());
         return new ResponseEntity<>(productResponse, HttpStatus.OK);

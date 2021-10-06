@@ -1,7 +1,6 @@
 package com.target.myRetail.exception;
 
 import com.target.myRetail.exception.handler.MyRetailExceptionHandler;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -9,12 +8,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * @author Pooja Jayanna
  * @version 1.0
  */
 @ExtendWith(MockitoExtension.class)
-public class MyRetailExceptionHandlerTest {
+public class MyRetailExceptionHandlerUnitTest {
 
     @InjectMocks
     MyRetailExceptionHandler myRetailExceptionHandler;

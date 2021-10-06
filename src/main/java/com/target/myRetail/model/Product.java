@@ -7,6 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 
+/**
+ * Product document
+ *
+ * @author Pooja Jayanna
+ * @version 1.0
+ */
 @Data
 @Document(collection = "products")
 public class Product {

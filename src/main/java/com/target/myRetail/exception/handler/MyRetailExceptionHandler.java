@@ -5,9 +5,14 @@ import com.target.myRetail.exception.dto.ErrorDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Global Exception handler.
  *
@@ -53,7 +58,11 @@ public class MyRetailExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public final ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
-        ErrorDetails errorDetails = new ErrorDetails(ex.getBindingResult().toString(), HttpStatus.BAD_REQUEST.toString());
+        List<String> message = ex.getBindingResult()
+                .getAllErrors().stream()
+                .map(ObjectError::getDefaultMessage)
+                .collect(Collectors.toList());
+        ErrorDetails errorDetails = new ErrorDetails(message.toString(), HttpStatus.BAD_REQUEST.toString());
         log.debug("In MyRetailExceptionHandler handleMethodArgumentNotValid with - "+ex.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }

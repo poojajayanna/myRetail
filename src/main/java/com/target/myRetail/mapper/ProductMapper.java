@@ -18,12 +18,11 @@ public class ProductMapper {
     /**
      * Convert Product Model Object to ProductResponse Object.
      *
-     * @param product - Model Object
+     * @param product     - Model Object
      * @param productName - ProductName from External Service.
      * @return ProductResponse
      */
     public static ProductResponse toProductResponse(Product product, String productName) {
-        log.debug("Entering toProductResponse with Product - "+product.toString());
         ProductResponse productResponse = new ProductResponse();
         productResponse.setProductId(product.getId());
         productResponse.setName(productName);
@@ -31,25 +30,23 @@ public class ProductMapper {
         currentPrice.setValue(product.getPrice());
         currentPrice.setCurrencyCode(CurrencyCode.valueOf(product.getCurrencyCode()));
         productResponse.setCurrentPrice(currentPrice);
-        log.debug("Exiting toProductResponse with ProductResponse - "+productResponse.toString());
-        return  productResponse;
+        return productResponse;
     }
 
     /**
      * Convert ProductRequest Object to Product Model Object.
      *
      * @param productRequest - Request Object.
-     * @param id - productId.
+     * @param id             - productId.
      * @return Product
      */
     public static Product toProduct(ProductRequest productRequest, Integer id) {
-        log.debug("Entering toProduct with productRequest - "+productRequest.toString());
         Product product = new Product();
         product.setName(productRequest.getName());
         if (productRequest.getCurrentPrice() != null) {
             CurrentPrice currentPrice = productRequest.getCurrentPrice();
             /* setting USD as default currency code */
-            CurrencyCode currencyCode = currentPrice.getCurrencyCode() == null? CurrencyCode.USD : currentPrice.getCurrencyCode();
+            CurrencyCode currencyCode = currentPrice.getCurrencyCode() == null ? CurrencyCode.USD : currentPrice.getCurrencyCode();
             product.setCurrencyCode(currencyCode.toString());
             product.setPrice(currentPrice.getValue());
         }
@@ -58,7 +55,6 @@ public class ProductMapper {
         } else {
             product.setId(id);
         }
-        log.debug("Exiting toProduct with Product - "+product.toString());
-        return  product;
+        return product;
     }
 }

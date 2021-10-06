@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
  * Unit - Test for controller.
  */
 @ExtendWith(MockitoExtension.class)
-public class MyRetailControllerTest {
+public class MyRetailControllerUnitTest {
 
     @InjectMocks
     MyRetailController myRetailController;
