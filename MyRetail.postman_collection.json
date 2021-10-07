@@ -1,0 +1,71 @@
+{
+	"variables": [],
+	"info": {
+		"name": "MyRetail",
+		"_postman_id": "0883cdca-ca09-392d-184a-e3d62c421759",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/products/",
+			"request": {
+				"url": "http://localhost:8080/products/54456119",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"newProduct\",\n\t\"productId\" : 54456119,\n\t\"current_price\":\n\t{\"value\": 13.49,\n\t\"currency_code\":\"USD\"}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/products/54456119",
+			"request": {
+				"url": "http://localhost:8080/products/54456119",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\" : \"newProduct\",\n  \"productId\" : 13860428,\n  \"current_price\":\n  {\"value\": 13.49,\n  \"currency_code\":\"USD\"}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/products/",
+			"request": {
+				"url": "http://localhost:8080/products/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"newProduct\",\n\t\"productId\" : 13860428,\n\t\"current_price\":\n\t{\"value\": 13.49,\n\t\"currency_code\":\"USD\"}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

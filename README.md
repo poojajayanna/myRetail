@@ -18,7 +18,7 @@ Project is created with:
 * MongoDB
 	
 ## Setup
-To run this project, 
+To run and build this project, 
 - Install docker desktop
 ```
 $ docker-compose up -d
@@ -39,4 +39,11 @@ $ java -jar
 ```
 
 You can use postman collections or swagger.yml try APIs
+
+## NOTE :
+
+- Currently External Redsky API https://redsky.target.com/v3/pdp/tcin/13860428?key=candidate is throwing 410-GONE Exception.
+- Once new URL provided update the application.properties. 
+- It will work fine if there is no contract changes for Redsky API.
+- Please uncomment RedskyServiceIntegrationTest once URL is working.
 
