@@ -45,5 +45,5 @@ You can use postman collections or swagger.yml try APIs
 - Currently External Redsky API https://redsky.target.com/v3/pdp/tcin/13860428?key=candidate is throwing 410-GONE Exception.
 - Once new URL provided update the application.properties. 
 - It will work fine if there is no contract changes for Redsky API.
-- Please uncomment RedskyServiceIntegrationTest once URL is working.
+- Please uncomment RedskyServiceIntegrationTest and MyRetailServiceIntegrationTest once URL is working.
 
